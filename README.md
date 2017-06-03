@@ -1,12 +1,4 @@
-# Análisis exploratorio: Alquiler público de bicicletas de la ciudad de San Francisco entre 2013 y 2015.
-
-El set de datos puede encontrarse en:
-
-https://www.kaggle.com/benhamner/sf-bay-area-bike-share
-
-
-
-Trabajo Práctico Nº1 de la materia 75.06 Organización de Datos.
+# Grupo 19: Organización de datos (75.06)
 
 Facultad de Ingenería, Universidad de Buenos Aires.
 
