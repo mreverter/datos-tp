@@ -3,9 +3,9 @@ from keras.layers import Dense
 import numpy as np
 import pandas as pd
 
-#Parámetros
-epoch = 50
-batch = 16
+#Parametros
+epoch = 1
+batch = 32
 umbral = 0.500
 
 #Cargamos los datos
@@ -17,8 +17,8 @@ for i in range(0,32):
     
 train = train.values
 
-train_X = train[:,[2,3,4,5,6,7,9,11,12,13]]
-train_Y = train[:,14:46]
+train_X = train[:,[0,1,2,3,4,5,6,7,9,10]]
+train_Y = train[:,11:43]
 
 np.random.seed(7)
 
@@ -45,10 +45,18 @@ print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 print("")
 print("Entrenando modelo... OK")
 
+print("")
+print("Salvando el modelo en archivo")
+
+model.save('model_train.h5')
+
+print("")
+print("Salvando el modelo en archivo... OK")
+
 test = pd.read_csv('test.csv')
 test = test.values
 
-test_X = test[:,[2,4,5,6,7,8,10,11,12,13]]
+test_X = test[:,[0,1,2,3,4,5,6,7,8,9]]
 
 print("")
 print("Prediciendo valores...")
