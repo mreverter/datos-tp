@@ -21,10 +21,9 @@ train['end_minute'] = train['end_date'].map(lambda x: x.minute)
 
 train = train[['start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id','duration']]
 
-#weather = weather[['date','zip_code','mean_temperature_f','mean_wind_speed_mph','mean_visibility_miles']]
-
 #Creo el csv para el train
 train_df = pd.DataFrame(train,columns={'start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id','duration'})
+train_df = train_df[['start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id','duration']]
 train_df.to_csv('train.csv',index=False)
 
 
@@ -44,8 +43,7 @@ test['end_minute'] = test['end_date'].map(lambda x: x.minute)
 
 test = test[['id','start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id']]
 
-#weather = weather[['date','zip_code','mean_temperature_f','mean_wind_speed_mph','mean_visibility_miles']]
-
 #Creo el csv para el test
 test_df = pd.DataFrame(test,columns={'id','start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id'})
+test_df = test_df[['start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id','id']]
 test_df.to_csv('test.csv',index=False)

@@ -3,6 +3,7 @@ import pandas as pd
 
 #Parametros
 umbral = 0.500
+entrada = [0,1,2,3,4,5,6,7,8,9]
 
 print("Cargando modelo...")
 
@@ -13,7 +14,7 @@ test = test.values
 print("")
 print("Cargando modelo... OK")
 
-test_X = test[:,[0,1,2,3,4,5,6,7,8,9]]
+test_X = test[:,entrada]
 
 print("")
 print("Prediciendo valores...")

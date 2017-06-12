@@ -4,9 +4,11 @@ import numpy as np
 import pandas as pd
 
 #Parametros
-epoch = 1
-batch = 32
+epoch = 50
+batch = 8
 umbral = 0.500
+
+entrada = [0,1,2,3,4,5,6,7,8,9]
 
 #Cargamos los datos
 train = pd.read_csv('train.csv')
@@ -17,7 +19,7 @@ for i in range(0,32):
     
 train = train.values
 
-train_X = train[:,[0,1,2,3,4,5,6,7,9,10]]
+train_X = train[:,entrada]
 train_Y = train[:,11:43]
 
 np.random.seed(7)
@@ -31,7 +33,7 @@ print("")
 
 model = Sequential()
 model.add(Dense(input_layer,input_dim=input_layer))
-model.add(Dense(18,activation='relu'))
+model.add(Dense(128,activation='relu'))
 model.add(Dense(output_layer,activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy',optimizer='adam',metrics=['accuracy'])
@@ -56,7 +58,7 @@ print("Salvando el modelo en archivo... OK")
 test = pd.read_csv('test.csv')
 test = test.values
 
-test_X = test[:,[0,1,2,3,4,5,6,7,8,9]]
+test_X = test[:,entrada]
 
 print("")
 print("Prediciendo valores...")
