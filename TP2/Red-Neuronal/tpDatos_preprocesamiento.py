@@ -6,44 +6,52 @@ trip_test = pd.read_csv('trip_test.csv')
 weather = pd.read_csv('weather.csv')
 
 #En base a los datos, construimos el train
-train = trip_train[['start_date','end_date','start_station_id','end_station_id','duration']]
+train = trip_train[['start_date','end_date','start_station_id','end_station_id','bike_id','subscription_type','duration']]
 train['start_date'] = pd.to_datetime(train['start_date'])
 train['end_date'] = pd.to_datetime(train['end_date'])
 train['start_day'] = train['start_date'].map(lambda x: x.day)
 train['start_month'] = train['start_date'].map(lambda x: x.month)
 train['start_hour'] = train['start_date'].map(lambda x: x.hour)
 train['start_minute'] = train['start_date'].map(lambda x: x.minute)
+train['start_day_of_week'] = train['start_date'].map(lambda x: x.dayofweek)
 
 train['end_day'] = train['end_date'].map(lambda x: x.day)
 train['end_month'] = train['end_date'].map(lambda x: x.month)
 train['end_hour'] = train['end_date'].map(lambda x: x.hour)
 train['end_minute'] = train['end_date'].map(lambda x: x.minute)
+train['end_day_of_week'] = train['end_date'].map(lambda x: x.dayofweek)
 
-train = train[['start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id','duration']]
+train['subscription_type'] = train['subscription_type'].map(lambda x: 1 if (x == 'Subscriber') else 0)
+
+train = train[['start_day','start_month','start_hour','start_minute','start_day_of_week','end_day','end_month','end_hour','end_minute','end_day_of_week','start_station_id','end_station_id','bike_id','subscription_type','duration']]
 
 #Creo el csv para el train
-train_df = pd.DataFrame(train,columns={'start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id','duration'})
-train_df = train_df[['start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id','duration']]
+train_df = pd.DataFrame(train,columns={'start_day','start_month','start_hour','start_minute','start_day_of_week','end_day','end_month','end_hour','end_minute','end_day_of_week','start_station_id','end_station_id','bike_id','subscription_type','duration'})
+train_df = train_df[['start_day','start_month','start_hour','start_minute','start_day_of_week','end_day','end_month','end_hour','end_minute','end_day_of_week','start_station_id','end_station_id','bike_id','subscription_type','duration']]
 train_df.to_csv('train.csv',index=False)
 
 
 #Ahora de la misma forma, construimos el test
-test = trip_test[['id','start_date','end_date','start_station_id','end_station_id']]
+test = trip_test[['id','start_date','end_date','start_station_id','end_station_id','bike_id','subscription_type']]
 test['start_date'] = pd.to_datetime(test['start_date'])
 test['end_date'] = pd.to_datetime(test['end_date'])
 test['start_day'] = test['start_date'].map(lambda x: x.day)
 test['start_month'] = test['start_date'].map(lambda x: x.month)
 test['start_hour'] = test['start_date'].map(lambda x: x.hour)
 test['start_minute'] = test['start_date'].map(lambda x: x.minute)
+test['start_day_of_week'] = test['start_date'].map(lambda x: x.dayofweek)
 
 test['end_day'] = test['end_date'].map(lambda x: x.day)
 test['end_month'] = test['end_date'].map(lambda x: x.month)
 test['end_hour'] = test['end_date'].map(lambda x: x.hour)
 test['end_minute'] = test['end_date'].map(lambda x: x.minute)
+test['end_day_of_week'] = test['end_date'].map(lambda x: x.dayofweek)
 
-test = test[['id','start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id']]
+test['subscription_type'] = test['subscription_type'].map(lambda x: 1 if (x == 'Subscriber') else 0)
+
+test = test[['id','start_day','start_month','start_hour','start_minute','start_day_of_week','end_day','end_month','end_hour','end_minute','end_day_of_week','start_station_id','end_station_id','bike_id','subscription_type']]
 
 #Creo el csv para el test
-test_df = pd.DataFrame(test,columns={'id','start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id'})
-test_df = test_df[['start_day','start_month','start_hour','start_minute','end_day','end_month','end_hour','end_minute','start_station_id','end_station_id','id']]
+test_df = pd.DataFrame(test,columns={'id','start_day','start_month','start_hour','start_minute','start_day_of_week','end_day','end_month','end_hour','end_minute','end_day_of_week','start_station_id','end_station_id','bike_id','subscription_type'})
+test_df = test_df[['start_day','start_month','start_hour','start_minute','start_day_of_week','end_day','end_month','end_hour','end_minute','end_day_of_week','start_station_id','end_station_id','bike_id','subscription_type','id']]
 test_df.to_csv('test.csv',index=False)
