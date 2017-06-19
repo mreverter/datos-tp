@@ -8,16 +8,11 @@ epoch = 50
 batch = 8
 umbral = 0.500
 
-entrada = [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
+entrada = [0,1,2,3,4,5,6,7,8,9]
 
 #Cargamos los datos
 train = pd.read_csv('train.csv')
-
-#Fase de preprocesamiento de datos
-train = train[train.duration <= 100000]
-train_p = train[entrada].apply(lambda x: (x - x.min()) / (x.max() - x.min()))
-train_p['duration'] = train['duration'].map(lambda x: bin(x)[2:].zfill(32))
-train = train_p
+train['duration'] = train['duration'].map(lambda x: bin(x)[2:].zfill(32))
 
 for i in range(0,32):
     train['bit'+str(i)] = train['duration'].map(lambda x: x[i])
@@ -25,7 +20,7 @@ for i in range(0,32):
 train = train.values
 
 train_X = train[:,entrada]
-train_Y = train[:,15:47]
+train_Y = train[:,11:43]
 
 np.random.seed(7)
 
@@ -38,10 +33,10 @@ print("")
 
 model = Sequential()
 model.add(Dense(input_layer,input_dim=input_layer))
-model.add(Dense(128,activation='sigmoid'))
+model.add(Dense(128,activation='relu'))
 model.add(Dense(output_layer,activation='sigmoid'))
 
-model.compile(loss='mean_squared_error',optimizer='adam',metrics=['accuracy'])
+model.compile(loss='binary_crossentropy',optimizer='adam',metrics=['accuracy'])
 model.fit(train_X,train_Y,epochs=epoch,batch_size=batch,verbose=1)
 
 scores = model.evaluate(train_X,train_Y)
@@ -61,9 +56,6 @@ print("")
 print("Salvando el modelo en archivo... OK")
 
 test = pd.read_csv('test.csv')
-test_p = test[entrada].apply(lambda x: (x - x.min()) / (x.max() - x.min()))
-test_p['id'] = test['id']
-test = test_p
 test = test.values
 
 test_X = test[:,entrada]
